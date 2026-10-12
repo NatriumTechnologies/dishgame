@@ -72,7 +72,7 @@ export const UI = {
   },
 
   isMobileOrTouch() {
-    return window.matchMedia('(max-width: 1024px), (pointer: coarse)').matches;
+    return window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
   },
 
   startGame() {

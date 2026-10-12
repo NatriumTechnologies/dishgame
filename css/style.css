@@ -80,13 +80,19 @@ body {
   background: #777;
 }
 
-/* In-Game Menu */
+/* In-Game Menu — anchored top-left below Cleaned Dishes so top-right staircase is 100% clear */
 #inGameMenu {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 90;
+  position: absolute;
+  top: 68px;
+  left: 10px;
+  z-index: 25;
   display: none;
+}
+
+#inGameMenu .in-game-button {
+  font-size: 10px;
+  padding: 6px 10px;
+  margin: 2px;
 }
 
 /* Pause Overlay */
@@ -259,9 +265,9 @@ body {
 /* Score & Prompts */
 #scoreDisplay {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 14px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'Mega', 'Press Start 2P', sans-serif;
   color: #ffffff;
   text-shadow: 2px 2px 0 #000;
@@ -270,9 +276,9 @@ body {
 
 #cleanedDishesDisplay {
   position: absolute;
-  top: 44px;
+  top: 42px;
   left: 14px;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Mega', 'Press Start 2P', sans-serif;
   color: #a8dadc;
   text-shadow: 2px 2px 0 #000;
@@ -281,19 +287,20 @@ body {
 
 #promptText {
   position: absolute;
-  bottom: 18px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   font-family: 'Press Start 2P', sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   color: #fefae0;
-  background: rgba(0, 0, 0, 0.78);
-  padding: 8px 14px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.85);
+  padding: 7px 12px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
   text-shadow: 1px 1px 0 #000;
   text-align: center;
   white-space: nowrap;
   pointer-events: none;
+  z-index: 20;
 }
 
 #promptText:empty {
@@ -338,7 +345,7 @@ body {
   display: none;
 }
 
-@media (max-width: 1024px), (pointer: coarse) {
+@media (max-width: 768px), (pointer: coarse) {
   #mobileControls {
     position: fixed;
     bottom: 12px;
@@ -382,9 +389,9 @@ body {
 .fullscreen-button {
   position: absolute;
   bottom: 10px;
-  right: 10px;
-  font-size: 11px;
-  padding: 8px 12px;
+  left: 10px;
+  font-size: 10px;
+  padding: 7px 10px;
 }
 
 #rainContainer {

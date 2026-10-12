@@ -660,26 +660,24 @@ export const Game = {
       const labels = { bowl: 'BOWLS', plate: 'PLATES', cup: 'CUPS' };
       Object.entries(u.shelf.zones).forEach(([type, zone]) => {
         const count = this.storedDishes[type] || 0;
-        // Subtle slot label on right
-        ctx.font = '9px "Press Start 2P", monospace';
-        ctx.fillStyle = 'rgba(255,255,255,0.65)';
-        ctx.fillText(labels[type], zone.drawX + 54, zone.drawY + 20);
+        const itemKey = 'clean' + type.charAt(0).toUpperCase() + type.slice(1);
+        const image = this.images[itemKey];
+        const drawSize = type === 'cup' ? 38 : 48;
 
-        if (count > 0) {
-          const itemKey = 'clean' + type.charAt(0).toUpperCase() + type.slice(1);
-          const image = this.images[itemKey];
-          if (image && image.complete) {
-            const drawSize = type === 'cup' ? 38 : 52;
-            ctx.drawImage(image, zone.drawX, zone.drawY + 6, drawSize, drawSize);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 12px "Press Start 2P", monospace';
-            ctx.fillText(`x${count}/${this.MAX_DISHES_PER_TYPE}`, zone.drawX + 48, zone.drawY + 42);
-          }
-        } else {
-          ctx.fillStyle = 'rgba(255,255,255,0.35)';
-          ctx.font = '10px "Press Start 2P", monospace';
-          ctx.fillText(`0/${this.MAX_DISHES_PER_TYPE}`, zone.drawX + 54, zone.drawY + 40);
+        if (image && image.complete) {
+          ctx.save();
+          ctx.globalAlpha = count > 0 ? 1.0 : 0.25;
+          ctx.drawImage(image, zone.drawX - 6, zone.drawY + 8, drawSize, drawSize);
+          ctx.restore();
         }
+
+        ctx.font = '9px "Press Start 2P", monospace';
+        ctx.fillStyle = '#ffd166';
+        ctx.fillText(labels[type], zone.drawX + 42, zone.drawY + 24);
+
+        ctx.font = '11px "Press Start 2P", monospace';
+        ctx.fillStyle = count > 0 ? '#ffffff' : 'rgba(255,255,255,0.45)';
+        ctx.fillText(`${count}/${this.MAX_DISHES_PER_TYPE}`, zone.drawX + 42, zone.drawY + 44);
       });
     }
 
@@ -718,10 +716,18 @@ export const Game = {
 
     // Warm carpet area in the downstairs Buffet Dining Room (other side of the wall, y > 268)
     ctx.fillStyle = 'rgba(110, 24, 32, 0.28)';
-    ctx.fillRect(40, 290, 720, 285);
+    ctx.fillRect(40, 286, 720, 290);
     ctx.strokeStyle = 'rgba(218, 175, 52, 0.35)';
     ctx.lineWidth = 2;
-    ctx.strokeRect(40, 290, 720, 285);
+    ctx.strokeRect(40, 286, 720, 290);
+
+    this.drawPixelTag(
+      ctx,
+      `DOWNSTAIRS BUFFET (+25 PTS | RUSH: ${this.buffetHotItem.toUpperCase()} +45)`,
+      175,
+      304,
+      '#ffd166'
+    );
 
     // 2. Top-Right Staircase going UP to Bar & Kitchen
     if (this.images.stairsUp && this.images.stairsUp.complete) {
@@ -769,13 +775,6 @@ export const Game = {
         b.buffet.draw.height
       );
     }
-    this.drawPixelTag(
-      ctx,
-      `DOWNSTAIRS BUFFET (+25 PTS | RUSH: ${this.buffetHotItem.toUpperCase()} +45)`,
-      b.buffet.draw.x + 12,
-      b.buffet.draw.y - 18,
-      '#ffd166'
-    );
 
     // Draw clean dish stacks & counts on each of the 3 Buffet stations
     Object.entries(b.buffet.zones).forEach(([type, zone]) => {
@@ -794,8 +793,8 @@ export const Game = {
       const tagColor = isHot ? '#00f5d4' : '#ffffff';
       this.drawPixelTag(
         ctx,
-        `${zone.label}: ${count}/${this.MAX_DISHES_PER_TYPE}${isHot ? ' ★' : ''}`,
-        zone.drawX - 8,
+        `${zone.label} ${count}/${this.MAX_DISHES_PER_TYPE}${isHot ? '*' : ''}`,
+        zone.drawX - 16,
         zone.drawY + 86,
         tagColor
       );
