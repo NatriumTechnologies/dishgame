@@ -3,12 +3,18 @@
   src: url('../mega.ttf') format('truetype');
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Mega', sans-serif;
-  background: #1a1a1a;
+  font-family: 'Mega', 'Press Start 2P', sans-serif;
+  background: #14161d;
   touch-action: manipulation;
+  overflow-x: hidden;
+  user-select: none;
 }
 
 /* Main Menu */
@@ -28,10 +34,11 @@ body {
 .menu-title {
   font-size: 48px;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 3px 3px 0 #000, 0 4px 12px rgba(0, 0, 0, 0.5);
   margin-bottom: 40px;
   animation: float 3s ease-in-out infinite;
-  z-index: 2; /* JUST CHANGED VALUE!!!!!!!!*/
+  z-index: 2;
+  text-align: center;
 }
 
 /* 8-bit style for all buttons */
@@ -42,21 +49,17 @@ body {
 #interactButton,
 #fullscreenBtn {
   font-family: 'Press Start 2P', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   color: #fff;
-  
-  /* 8-bit style border */
   border: 3px solid #fff;
-  border-radius: 0; /* no rounding for pixel look */
-  
+  border-radius: 0;
   background: #333;
   text-shadow: 1px 1px 0 #000;
-  
   cursor: pointer;
-  padding: 10px 20px;
-  transition: none; /* no smooth transitions for a retro feel */
-  margin: 5px; /* Optional spacing */
-  z-index: 2; /* JUST CHANGED VALUE!!!!!!!!*/
+  padding: 10px 18px;
+  transition: none;
+  margin: 5px;
+  z-index: 2;
 }
 
 .menu-button:hover,
@@ -94,7 +97,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.72);
   z-index: 95;
   flex-direction: column;
   justify-content: center;
@@ -102,9 +105,9 @@ body {
 }
 
 .pause-menu {
-  background: #333;
-  padding: 20px;
-  border-radius: 10px;
+  background: #2b2d38;
+  padding: 24px;
+  border-radius: 8px;
   text-align: center;
   width: 380px;
   border: 4px solid #fff;
@@ -113,7 +116,7 @@ body {
 }
 
 .pause-title {
-  color: #0ff;
+  color: #00f5d4;
   font-size: 18px;
   margin-bottom: 20px;
 }
@@ -126,7 +129,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 999;
 }
 
@@ -136,49 +139,72 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #333;
-  padding: 20px;
-  border-radius: 10px;
+  background: #2b2d38;
+  padding: 22px;
+  border-radius: 8px;
   z-index: 1000;
-  width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  width: min(460px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
   border: 4px solid #fff;
   font-family: 'Press Start 2P', sans-serif;
   color: #fff;
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .modal-title {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 17px;
+  margin-bottom: 18px;
   text-align: center;
-  color: #0ff;
+  color: #00f5d4;
 }
 
 .close-button {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 12px;
   font-size: 24px;
   cursor: pointer;
-  color: #7f8c8d;
+  color: #cbd5e1;
+}
+
+.close-button:hover {
+  color: #fff;
 }
 
 .modal-content {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .shop-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 10px;
   border: 2px dotted #ccc;
-  margin: 5px 0;
+  margin: 8px 0;
   border-radius: 5px;
 }
 
+.shop-item h3 {
+  margin: 0 0 6px 0;
+  font-size: 12px;
+  color: #ffd166;
+}
+
+.shop-item p {
+  margin: 0;
+  font-size: 10px;
+  color: #e2e8f0;
+}
+
 .shop-item button:disabled {
-  background: #bdc3c7;
+  background: #64748b;
+  border-color: #94a3b8;
+  color: #cbd5e1;
   cursor: not-allowed;
 }
 
@@ -186,9 +212,9 @@ body {
 .settings-control {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 14px 0;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 /* Game Container */
@@ -196,71 +222,97 @@ body {
   display: none;
   width: 800px;
   height: 600px;
-  margin: 20px auto;
+  margin: 24px auto;
   position: relative;
-  background: black;
+  background: #0d0f14;
+  border: 3px solid #334155;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
   overflow: hidden;
 }
 
-canvas {
-  border: 2px solid black;
-  touch-action: none; /* We'll handle touches ourselves */
+#gameContainer:fullscreen,
+#gameContainer:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: none;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  background: #090b10;
 }
 
-/* Player Sprite */
-#player {
-  position: absolute;
-  width: 70px;
-  height: 100px;
-  will-change: transform;
-  background-repeat: no-repeat;
-  background-size: contain;
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   image-rendering: pixelated;
-  pointer-events: none;
+  touch-action: none;
+}
+
+/* Legacy DOM player hidden since player renders directly on canvas */
+#player {
+  display: none;
 }
 
 /* Score & Prompts */
 #scoreDisplay {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 14px;
   font-size: 20px;
-  font-family: 'Mega', sans-serif;
-  color: white;
+  font-family: 'Mega', 'Press Start 2P', sans-serif;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000;
+  pointer-events: none;
 }
 
-/* Cleaned Dishes Display */
 #cleanedDishesDisplay {
   position: absolute;
-  top: 50px;
-  left: 10px;
+  top: 44px;
+  left: 14px;
   font-size: 18px;
-  font-family: 'Mega', sans-serif;
-  color: white;
+  font-family: 'Mega', 'Press Start 2P', sans-serif;
+  color: #a8dadc;
+  text-shadow: 2px 2px 0 #000;
+  pointer-events: none;
 }
 
 #promptText {
   position: absolute;
-  top: 90px;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Mega', sans-serif;
-  font-size: 18px;
-  color: white;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 11px;
+  color: #fefae0;
+  background: rgba(0, 0, 0, 0.78);
+  padding: 8px 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  text-shadow: 1px 1px 0 #000;
   text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+#promptText:empty {
+  display: none;
 }
 
 /* Washing Progress */
 #washingProgress {
   position: absolute;
-  top: 130px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 20px;
-  background-color: #333;
-  border: 5px solid #000000;
+  width: 210px;
+  height: 22px;
+  background-color: #1e293b;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   display: none;
+  pointer-events: none;
 }
 
 #progressBar {
@@ -268,62 +320,49 @@ canvas {
   height: 100%;
   background: repeating-linear-gradient(
     45deg,
-    #4CAF50,
-    #4CAF50 10px,
-    #45a049 10px,
-    #45a049 20px
+    #4ade80,
+    #4ade80 10px,
+    #22c55e 10px,
+    #22c55e 20px
   );
-  transition: width 0.05s steps(20);
+  transition: width 0.05s linear;
 }
 
-/* Floating animation for main menu title */
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  50% { transform: translateY(-16px); }
   100% { transform: translateY(0px); }
 }
 
 #mobileControls {
-  /* On screens larger than 1024px, hide by default (override below if needed) */
   display: none;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px), (pointer: coarse) {
   #mobileControls {
-    display: flex;
     position: fixed;
-    bottom: 10px;
+    bottom: 12px;
+    left: 0;
     width: 100%;
     z-index: 99;
-    padding: 0 20px;
-    /* 'justify-content: space-between' ensures
-       that .joystick-side is on the left
-       and .interact-side is on the right */
+    padding: 0 24px;
     justify-content: space-between;
+    pointer-events: none;
   }
 
   .joystick-side,
   .interact-side {
     display: flex;
     align-items: center;
-  }
-  
-  /* If you want the joystick to definitely "stick" to the left: */
-  .joystick-side {
-    justify-content: flex-start;
-  }
-
-  /* And the Interact button to definitely "stick" to the right: */
-  .interact-side {
-    justify-content: flex-end;
+    pointer-events: auto;
   }
 }
 
-/* Joystick container */
 #joystickContainer {
   width: 150px;
   height: 150px;
-  border: 2px dashed #fff;
+  border: 2px dashed rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 50%;
   position: relative;
   touch-action: none;
@@ -340,31 +379,32 @@ canvas {
   left: calc(50% - 20px);
 }
 
-/* Fullscreen Button */
 .fullscreen-button {
-  position: fixed;
+  position: absolute;
   bottom: 10px;
   right: 10px;
+  font-size: 11px;
+  padding: 8px 12px;
 }
 
 #rainContainer {
-    position: absolute;  /* Position relative to mainMenu instead of fixed */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .rain-drop {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   opacity: 0.5;
+  image-rendering: pixelated;
   animation: fall linear forwards;
-  /*filter: blur(1px);   Slight blur for depth */
-  transform: rotate(15deg);  /* Slight tilt */
+  transform: rotate(15deg);
 }
 
 @keyframes fall {
@@ -372,6 +412,6 @@ canvas {
     transform: translateY(0) rotate(15deg);
   }
   to {
-    transform: translateY(calc(100vh + 50px)) rotate(375deg);  /* Full rotation plus initial tilt */
+    transform: translateY(calc(100vh + 60px)) rotate(375deg);
   }
 }

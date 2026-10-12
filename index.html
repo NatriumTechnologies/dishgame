@@ -13,7 +13,6 @@
     rel="stylesheet"
   />
 
-  <!-- Your main CSS file (containing the large snippet you provided) -->
   <link rel="stylesheet" href="./css/style.css" />
 
   <script>
@@ -31,11 +30,10 @@
       ctx.fillStyle = '#fff';
 
       const text = "DJ";
-
       const textMetrics = ctx.measureText(text);
       const textWidth = textMetrics.width;
 
-      let textHeight = 16;
+      const textHeight = 16;
       const x = (size - textWidth) / 2;
       const y = (size - textHeight) / 2 + textHeight;
 
@@ -56,10 +54,9 @@
 </head>
 <body>
 
-
   <!-- Main Menu -->
   <div id="mainMenu">
-    <div id="rainContainer"></div>  <!-- Move it here -->
+    <div id="rainContainer"></div>
     <h1 class="menu-title">Dishwashing Joys</h1>
     <button class="menu-button" data-action="start-game">Play</button>
     <button class="menu-button" data-action="open-shop">Shop</button>
@@ -93,11 +90,11 @@
     <h2 class="modal-title">GAME SETTINGS</h2>
     <div class="modal-content">
       <div class="settings-control">
-        <label>BG Music Volume:</label>
+        <label for="bgmVolume">BG Music Volume:</label>
         <input type="range" min="0" max="100" value="50" id="bgmVolume">
       </div>
       <div class="settings-control">
-        <label>SFX Volume:</label>
+        <label for="sfxVolume">SFX Volume:</label>
         <input type="range" min="0" max="100" value="50" id="sfxVolume">
       </div>
     </div>
@@ -105,41 +102,41 @@
 
   <!-- Help Modal -->
   <div id="helpModal" class="modal">
-    <span class="close-button" onclick="UI.closeModal('helpModal')">&times;</span>
+    <span class="close-button">&times;</span>
     <h2 class="modal-title">HOW TO PLAY</h2>
     <div class="modal-content">
       <p>Controls:</p>
       <ul>
-        <li>Use WASD or Arrow Keys to move</li>
-        <li>"E" to pick up Dirty Dishes</li>
-        <li>Hold "E" to wash Dishes</li>
-        <li>"E" to put away dishes</li>
+        <li>WASD or Arrow Keys to move</li>
+        <li>Press "E" at the Top Bar Bus Tub to pick up dirty dishes</li>
+        <li>Hold "E" at the Sink to wash dishes</li>
+        <li>Press "E" to shelve dishes or set them on tables</li>
       </ul>
-      <p>Tips:</p>
+      <p>Upstairs Bar &amp; Downstairs Buffet:</p>
       <ul>
-        <li>Wait for dishes to build up before collection</li>
-        <li>Upgrade your speed and washing abilities in the shop</li>
-        <li>Keep an eye on your score to buy upgrades</li>
+        <li>Take the Top-Right Staircase down to the Basement</li>
+        <li>Walk through the doorway to the Buffet on the other side of the wall</li>
+        <li>Stocking the Downstairs Buffet pays +25 pts (+45 pts on Rush cravings!)</li>
       </ul>
-      <p>Where to put dishes on shelf:</p>
+      <p>Shelf Order:</p>
       <ul>
-        <li>Bowls go on top shelf</li>
-        <li>Plates go on middle shelf</li>
-        <li>Cups go on bottom shelf</li>
+        <li>Bowls: Top Shelf / Left Buffet</li>
+        <li>Plates: Middle Shelf / Center Buffet</li>
+        <li>Cups: Bottom Shelf / Right Buffet</li>
       </ul>
     </div>
   </div>
 
-    <!-- Help Modal -->
+  <!-- Credits Modal -->
   <div id="creditsModal" class="modal">
-    <span class="close-button" onclick="UI.closeModal('creditsModal')">&times;</span>
+    <span class="close-button">&times;</span>
     <h2 class="modal-title">Credits</h2>
     <div class="modal-content">
       <p>Siege: Main Programmer/Game Concept Creator</p>
       <p>DJ: Ideas</p>
     </div>
   </div>
-  
+
   <!-- Shop Modal -->
   <div id="shopModal" class="modal">
     <span class="close-button" data-action="close-shop">&times;</span>
@@ -148,31 +145,30 @@
       <div class="shop-item">
         <div>
           <h3>Speed Boost</h3>
-          <p>Move 20% faster</p>
+          <p>Move 18% faster</p>
         </div>
-        <button data-action="purchase-speed" id="speedUpgradeBtn">Buy (100)</button>
+        <button data-action="purchase-speed" id="speedUpgradeBtn">Lv.1 Buy (100)</button>
       </div>
       <div class="shop-item">
         <div>
           <h3>Washing Master</h3>
           <p>Wash dishes 30% faster</p>
         </div>
-        <button data-action="purchase-washing" id="washingUpgradeBtn">Buy (150)</button>
+        <button data-action="purchase-washing" id="washingUpgradeBtn">Lv.1 Buy (150)</button>
       </div>
       <div class="shop-item">
         <div>
-          <h3>Extra Storage</h3>
-          <p>Store more dishes on shelves</p>
+          <h3>Extra Storage &amp; Tray</h3>
+          <p>+2 Shelf/Buffet slots &amp; +1 Carry Stack</p>
         </div>
-        <button data-action="purchase-storage" id="storageUpgradeBtn">Buy (200)</button>
+        <button data-action="purchase-storage" id="storageUpgradeBtn">Lv.1 Buy (200)</button>
       </div>
     </div>
   </div>
 
   <!-- Game Container -->
-  <!-- Remove width and height attributes from the canvas -->
   <div id="gameContainer">
-    <canvas id="gameCanvas"></canvas>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
     <div id="scoreDisplay">Score: 0</div>
     <div id="cleanedDishesDisplay">Cleaned: 0</div>
     <div id="promptText"></div>
@@ -180,6 +176,7 @@
       <div id="progressBar"></div>
     </div>
     <div id="player"></div>
+    <button id="fullscreenBtn" class="fullscreen-button">Fullscreen</button>
   </div>
 
   <div id="mobileControls">
@@ -193,33 +190,15 @@
     </div>
   </div>
 
-  <!-- Fullscreen Button -->
-  <button id="fullscreenBtn" class="fullscreen-button">Fullscreen</button>
-
-  <!-- Your main JS scripts -->
   <script type="module">
     import { SpritePlayer } from './js/spriteplayer.js';
     import { Game } from './js/game.js';
     import { UI } from './js/ui.js';
-    import { startRain, stopRain } from './js/rain.js'; 
     import { setupMobileControls } from './js/mobile.js';
 
-    // Initialize the Game
-    Game.player = new SpritePlayer();
+    Game.player = new SpritePlayer(Game);
     UI.initialize(Game);
-    Game.init(); // sets up the canvas context, loads assets, etc.
-
-    // Resize the canvas to full window, then do it again on any window resize
-    function resizeCanvas() {
-      const canvas = document.getElementById('gameCanvas');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // If you have a separate mobile controls file, set that up too:
-    // setupMobileControls(Game);
+    setupMobileControls(Game);
   </script>
 </body>
 </html>
